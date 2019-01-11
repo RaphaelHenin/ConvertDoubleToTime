@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class ConvertDoubleToTime {
 
@@ -13,26 +15,29 @@ public class ConvertDoubleToTime {
 			Double newValue = value - Double.parseDouble(hourUnit);
 			if (newValue == 0)
 				return temp;
-			temp = convertDoubleToTime(Double.toString(Math.round(newValue * 60)), temp, i);
+			BigDecimal bd = new BigDecimal(newValue * 60);
+		    bd = bd.setScale(2, RoundingMode.HALF_UP);
+			temp = convertDoubleToTime(bd.toString(), temp, i);
 		} else {
 			temp[i + 1] = Integer.toString(firstUnit);
 			Double newValue = value - firstUnit;
 			if (newValue == 0)
 				return temp;
-			temp = convertDoubleToTime(Double.toString(Math.round(newValue * 60)), temp, i + 1);
+			BigDecimal bd = new BigDecimal(newValue * 60);
+		    bd = bd.setScale(2, RoundingMode.HALF_UP);
+			temp = convertDoubleToTime(bd.toString(), temp, i + 1);
 		}
+		for(int y=0;y<temp.length;y++)
+			if(temp[y]==null)
+				temp[y] = "00";
 		return temp;
 	}
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		String[] time = new String[4];
-		time = convertDoubleToTime("11.50", time, 0);
-		for(int i=0;i<time.length;i++)
-			if(time[i]==null)
-				time[i] = "00";
+		time = convertDoubleToTime("11.98", time, 0);
 		System.out.println(time[0]+"h"+time[1]+"m"+time[2]+"s"+time[3]);
-
 	}
 
 }
