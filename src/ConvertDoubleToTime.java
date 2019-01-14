@@ -30,12 +30,24 @@ public class ConvertDoubleToTime {
 			bd = bd.setScale(2, RoundingMode.HALF_UP);
 			temp = convertDoubleToTime(bd.doubleValue(), temp);
 		} else {
-			if (temp.size() < 1)
+			if (firstUnit == 0) {
 				temp.add(0, null);
-			temp.add(Integer.toString(firstUnit));
+				temp.add(1, null);
+			} else {
+				if (temp.size() < 1)
+					temp.add(0, null);
+				temp.add(Integer.toString(firstUnit));
+			}
 			Double newValue = time - firstUnit;
-			if (newValue == 0)
+			if (newValue == 0){
+				if(temp.size()==4)
+					if(firstUnit>30){
+						int plus = Integer.parseInt(temp.get(2)) + 1;
+						temp.set(2, Integer.toString(plus));
+						temp.set(3,null);
+					}
 				return temp;
+			}
 			BigDecimal bd = new BigDecimal(newValue * 60);
 			bd = bd.setScale(2, RoundingMode.HALF_UP);
 			temp = convertDoubleToTime(bd.doubleValue(), temp);
@@ -65,15 +77,13 @@ public class ConvertDoubleToTime {
 			else
 				timeToDisplay += time.get(0) + " heures";
 
-		else 
-			if (time.get(1) != null)
-				if (time.size() > 2)
-					timeToDisplay += time.get(1) + ":" + time.get(2) + " minutes";
-				else
-					timeToDisplay += time.get(1) + " minute(s)";
-			else 
-				if (time.get(2) != null)
-					timeToDisplay += time.get(2) + " seconde(s)";
+		else if (time.get(1) != null)
+			if (time.size() > 2)
+				timeToDisplay += time.get(1) + ":" + time.get(2) + " minutes";
+			else
+				timeToDisplay += time.get(1) + " minute(s)";
+		else if (time.get(2) != null)
+			timeToDisplay += time.get(2) + " seconde(s)";
 
 		// milliseconds are not displayed
 		return timeToDisplay;
@@ -82,7 +92,7 @@ public class ConvertDoubleToTime {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		ArrayList<String> time = new ArrayList<>();
-		time = convertDoubleToTime(0.1, time);
+		time = convertDoubleToTime(156.21, time);
 		System.out.println(displayTime(time));
 	}
 
