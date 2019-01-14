@@ -56,6 +56,13 @@ public class ConvertDoubleToTime {
 					temp.set(2, Integer.toString(plus));
 					temp.set(3, null);
 				}
+			if(temp.size()==1){
+				temp.add(null);
+				temp.add(null);
+			}
+			if(temp.size()==2){
+				temp.add(null);
+			}
 			return temp;
 		}
 		// Round big decimal to two digit after the point (ex : 0.63333333333 =>
@@ -96,7 +103,7 @@ public class ConvertDoubleToTime {
 
 	public static void main(String[] args){
 		// TODO Auto-generated method stub
-		System.out.println(displayTime(convertDoubleToTime(62.10, new ArrayList<String>())));
+		System.out.println(displayTime(convertDoubleToTime(50.00, new ArrayList<String>())));
 	}
 
 }
