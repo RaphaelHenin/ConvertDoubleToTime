@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -95,7 +94,7 @@ public class ConvertDoubleToTime {
 		return timeToDisplay;
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		// TODO Auto-generated method stub
 		System.out.println(displayTime(convertDoubleToTime(62.10, new ArrayList<String>())));
 	}
